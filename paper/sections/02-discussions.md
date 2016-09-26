@@ -35,11 +35,64 @@ target: dependencies
   commands
 ```
 
-Note that both dependencies and commands can be of arbitraty length. Dependencies are separated by whitespace, commands by new lines or `;` (if multiple commands on a single line).
+Note that both dependencies and commands can be of arbitraty length. Dependencies are separated by whitespace, commands by new lines or via `;` (if multiple commands on a single line).
 
-Some special commands are as follows:
+
+* `target`: This is the file we'd like to create. 
+* `dependencies`: These are the dependencies dependent on the associated `target` file.
+* `commands`: These commands determine how you create `target` from the associated `dependencies`. 
+
+Below I list an explicit example for clarity.
+
+Suppose we wanted to create the following file structure:
+```
+our_directory/
+	README.md
+	Makefile
+	paper/
+		sections/
+		  report.md
+		  report.html
+```
+We could structure a Makefile to create this as follows:
+
+``` bash
+.PHONY: all clean
+
+all: paper README.md Makefile paper sections
+
+paper: 
+	mkdir paper
+
+sections: paper   
+	cd paper; mkdir sections
+	echo init > paper/sections/report.md 
+
+report.md: paper 
+	cd $<; echo init > $@
+
+report.html: paper/sections report.md
+	cd papers/sections; pandoc -s report.md -o report.html
+
+
+clean:
+	rm -rf paper README.md
+```
+
+
+sections: paper sections   
+	cd $<; mkdir $@
+	echo init > paper/$@/report.md 
+
+
+
+Some special commands for Makefiles are as follows:
+
 `all`: Specifies which _targets_ to be executed from `make` call. If you only want to execute specific targets, you can do `make <specific target name>`.
-`.PHONY`: list of special commands that you used. Use this to 
+`clean`:
+`.PHONY`: list of special commands that you used. Use this to account for the possible case where you have filenames in your directory that share special character names (i.e. if you used `all` or `clean`.)
+
+
 
 
 
