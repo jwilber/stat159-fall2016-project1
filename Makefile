@@ -12,7 +12,7 @@ sections: paper sections
 	echo init > paper/$@/02-discussion.md 
 	echo init > paper/$@/03-conclusions.md 
 
-paper.md: paper paper.md
+paper.md: paper 
 	cd $<; echo init > $@
 
 paper.html: paper paper.md
