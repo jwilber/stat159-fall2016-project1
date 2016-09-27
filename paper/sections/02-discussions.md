@@ -42,7 +42,7 @@ Note that both dependencies and commands can be of arbitraty length. Dependencie
 * `dependencies`: These are the dependencies dependent on the associated `target` file.
 * `commands`: These commands determine how you create `target` from the associated `dependencies`. 
 
-Below I list an explicit example for clarity.
+Below I list an explicit example for clarity. It may seem a bit overwhelming at first, but I'll work through it shortly thereafter.
 
 Suppose we wanted to create the following file structure:
 ```
@@ -52,7 +52,6 @@ our_directory/
 	paper/
 		sections/
 		  report.md
-		  report.html
 ```
 We could structure a Makefile to create this as follows:
 
@@ -68,37 +67,94 @@ sections: paper
 	cd paper; mkdir sections
 	echo init > paper/sections/report.md 
 
-report.md: paper 
-	cd $<; echo init > $@
-
-report.html: paper/sections report.md
-	cd papers/sections; pandoc -s report.md -o report.html
-
-
+README.md:
+  echo init > README.md
+  
 clean:
 	rm -rf paper README.md
 ```
 
+Now let's walk through what we just did.
 
-sections: paper sections   
-	cd $<; mkdir $@
-	echo init > paper/$@/report.md 
+The first two targets, `.PHONY` AND `all`, are special.Let's get all the special character you see out of the way:
+
+* `all`: Specifies which _targets_ to be executed from `make` call. If you only want to execute specific targets, you can do `make <specific target name>`. If you want everything in the Makefile to run, you can just list each _target_, separated by a space, after `all:`
+* `.PHONY`: This is a list of special commands that you used. Use this to account for the possible case where you have filenames in your directory that share special character names (e.g. if we had a file named `all` in our directory before running `make`, confusion could arise).
+* `clean`: This tells you what bash commands to run if you run `make clean` in the command line. Conventionally, we use this to remove those elements that we just created, hence the commands `rm -rf paper READ.ME`, which will remove everything we _added_ to the directory via `make`.
+
+Following this, we see the following rule:
+
+```bash
+paper: 
+	mkdir paper
+```
+In this rule, our first target is paper, which has no dependencies. We give this target the command `mkdir paper`, which simply creates a directory called _paper_ in the directory holding our Makefile.
+
+```bash
+sections: paper   
+	cd paper; mkdir sections
+	echo init > paper/sections/report.md 
+```
+The above portion lists _sections_ as our target. We can see that the dependency is paper. This is listed as a dependency because we will reference this dependency in our commands. The commands are straightforward: change the directory into paper and create a new directory called sections. Then make a new file in that directory called _report.md_. Note that we had to reference the relative path of report.md _from the directory of the makefile_. This is because each new command line resets the directory to that which holds the makefile.
+
+The `README.md` target case is parallel to the `paper` case.
+
+The above example should be enough to get you started with makefiles. If you need any help, feel free to [email] me.
+
+### Markdown
+
+Markdown is a markup language with plain text formatting syntax. It is designed to be both easily read and easily converted to HTML (among other formats). This write-up itself was actually written in Markdown! (Right-click view source code to see what it looks like). Markdown is great because it allows for easy weaving between code, equations, and text, so it is often used in writing reports, blog posts, etc.. It can also be used in conjunction with other tools (one of which, pandoc, we'll discuss next) to produce very elegant outputs.
+
+Markdown is actually very simple, so we'll learn via some brief examples.
+
+We'll dicuss the following topics:
+
+* **headers**
+* **bold**
+* **italics**
+* **links**
+* **inserting images**
+
+ Although it was brief, I'm sure the above mini-tutorial for Markdown is enough to get you on your way to writing some posts in Markdown.
+ 
+ #### Markdown Summary
+ 
+ **Summary**: Markdown is an easy to use, easily converted plain-text language.
+ 
+ **Uses**: To write research papers, blog posts, books; pretty much anything that uses text, code, math, or some combination thereof.
 
 
+### Pandoc
+Pandoc is a command-line tool that is used to convert markup files to different formats. Pandoc handles conversion to a multitude of documents. Possible input document types include (but are not limited to) markdown, reStructuredText, textile, HTML, DocBook, LaTeX, MediaWiki markup, TWiki markup, OPML, Emacs Org-Mode, Txt2Tags, Microsoft Word docx, LibreOffice ODT, EPUB, and Haddock markup.
+Possible output document types include (but are not limited to) HTML formats (HTML5, XHTML), Ebooks, XML, docx, OPML, LaTeX, Markdown, DokuWiki markup, DocBook, PDF, and InDesign ICML.
 
-Some special commands for Makefiles are as follows:
+There isn't much more pertinent informatino to reveal, so I'll display some examples of how to use pandoc via the command-line. Note that, depending on your system, certain dependencies may need to be installed for certain desired output types. 
 
-`all`: Specifies which _targets_ to be executed from `make` call. If you only want to execute specific targets, you can do `make <specific target name>`.
-`clean`:
-`.PHONY`: list of special commands that you used. Use this to account for the possible case where you have filenames in your directory that share special character names (i.e. if you used `all` or `clean`.)
+Let's pretend that _report.md_ is a file currently located in your current working directory. To convert it to an html file named _report.html_ using pandoc is as simple as
 
+```bash
+pandoc -s report.md -o report.html
+```
 
+We can also convert it to pdf. *Note that you will need to have LaTeX installed for this to work.
 
+```bash
+pandoc report.md --latex-engine=xelatex -o report.pdf
+```
 
+In either example, the name of the final output is arbitrary. Just make sure that it has the desired extension type.
 
+As pandoc is a command-line command, we can also used what we learned previously and create it in a Makefile!
 
+```bash
+report.pdf: report.md
+  pandoc report.md --latex-engine=xelatex -o report.pdf
+```
 
+#### Pandoc Summary
+**Summary** Pandoc is a universal document converter.
 
+**Uses** Converting document types from one format to another. In the real world, this allows us to translate markdown files into elegant looking output.
 
 
 
