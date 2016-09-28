@@ -80,8 +80,9 @@ Displays committed snapshots. It lets you list the project history, filter it, a
 ##### Git Summary
 The whole idea behind any version control system is to store “safe” copies of a project so that you never have to worry about irreparably breaking your code base. Git allows us to do this in a very effective manner. GitHub allows us to easily collaborate with others and provides a user-friendly interface that also allows us to work on multiple projects in an organized manner.
 
-### Makefiles
+***
 
+### Makefiles
 
 A Makefile is a special type of executable file that organizes code compilation in a simple manner. Makefiles contain shell commands and are always named either "_Makefile_" or "_makefile_", depending on the system.
 While inside the directory that contains the makefile, typing `make` into the shell will execute the commands inside the Makefile.
@@ -164,6 +165,8 @@ The `README.md` target case is parallel to the `paper` case.
 
 The above example should be enough to get you started with makefiles. If you need any help, resources like Google and stackoverflow are your best friend.
 
+***
+
 ## Markdown
 
 ![](https://raw.githubusercontent.com/ucb-stat159/stat159-fall-2016/master/projects/proj01/images/markdown-logo.png)
@@ -197,9 +200,9 @@ We'll dicuss the following topics:
 
  Although it was brief, I'm sure the above mini-tutorial for Markdown is enough to get you on your way to writing some posts in Markdown. There are many other sources available online to get you started. Learning markdown is very easy and will go lengths in helping you produce beautiful, readable outputs.
  
- #### Markdown Summary
- 
 
+ 
+***
 
 ## Pandoc
 
@@ -232,6 +235,7 @@ report.pdf: report.md
 ```
 Thus, we can see the ubiqutous benefit having Pandoc: It easily converts document type from one format to another which, in the real world, facilitates the translation from markdown files into elegant looking output. 
 
+***
 
 ### This paper
 
