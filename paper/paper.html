@@ -1,1 +1,247 @@
-sometxt
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<h2 id="abstract">Abstract</h2>
+<p>With the growing popularity of data science and a general push toward computational methods across multiple domains, reproducibile results are more important now than ever. This paper presents several contemporary tools that one can incorporate into their work flow to achieve reproducible results. Five different tools will be discussed, namely Git, GitHub, pandoc, Markdown, and Makefiles. After discussing what these methods are, discussion will turn to how these methods were employed together in the production of this very paper. Finally, the paper will conclude with discussions on reproducibility and further software considerations.</p>
+<p>Outline: - Abstract - Introduction -Discussion - Git - GitHub - Makefiles - Markdown - pandoc - How they were used in this analysis - Conclusion</p>
+<h2 id="introduction">Introduction</h2>
+<p>Reproducibility is very important. Without it, one can't really guarantee the results of a given study. With it, one can, regardless of the conclusions.</p>
+<p>In the following document, I will discuss five popular tools used for reproducible reserac/data science. The tools I will discuss are as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Git</li>
+<li>GitHub</li>
+<li>Makefiles</li>
+<li>Markdown</li>
+<li>Pandoc</li>
+</ol>
+<p>I will discuss the tools in a tutorial-like format. First, I will describe what the tool is and why it is used. Following that description, I will reveal some examples of how to use that technology. For example, when I discuss Makefiles, I will describe what a Makefile is and how it can be used. After that, I will provide instructions and examples of how to construct your own makefile. I will do this piecewise for each of the 5 aforementioned tools.</p>
+<p>My goal with this post is to help you get your feet wet with reproducible tools. These tools are very useful - I used all of them in the creation of this document. Theywill set you off on the right path to achieve reproducibility in whatever your domain happens to be. So, without further ado, buen provecho!</p>
+<h2 id="git-and-github">Git and Github</h2>
+<p>Perhaps the most ubiquitously used tools with regards to reproducibility are Git and Github.The importance of these tools stems from the very reason we use them in the first place: version control. Version control is just the task of keeping a software system that consists of many versions and configurations well organized. So how are Git and Github used to achieve this aim? And more importantly, where does Git end and Github start?</p>
+<h4 id="git">Git</h4>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/ucb-stat159/stat159-fall-2016/master/projects/proj01/images/git-logo.png" />
+
+</div>
+<p>There are many version control systems in existence, and Git is one of the most popular. The way it works is pretty simple. After installing Git to your local machine, you use Git to create a new project directory and then tell Git to remember the history of changes made within that directory.</p>
+<p>Every time you add files, delete files, or make any change (no matter how big or small) to to this directory, you can tell Git to take a &quot;snapshot&quot; of the change. You repeat this process over and over, making changes and taking snapshots. The cool thing about Git is that it allows you to step back and forth whenever you need through all the snapshots in your project directory. This is version control.</p>
+<p>What makes Git even more powerful is that it's a <em>distributed</em> version control system. This allows you to collaborate on a project with other people; i.e. anybody working on the project can make a change on their local machine and have the change appear in other collaborators project directory. As awesome as this is, it's still slightly inconvenient. After all, what if you were working on something only to have a collaborator update and completely change everything the next day, nullifying your work? Or what if you wanted to push a change but your collaborator didn't have their machine plugged in? Enter Github.</p>
+<h4 id="github">GitHub</h4>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/ucb-stat159/stat159-fall-2016/master/projects/proj01/images/github-logo.png" />
+
+</div>
+<p>GitHub is a hosting service for Git repositories that includes many of its own features. You can think of each repository as its own working directory. What's more, unlike Git, which is a command-line tool, GitHub is has a Web-based graphical interface. This makes it easy to compare changes and administrate accounts, as well as find cool projects of interest. Combined with the snapshot commits from Git, GitHub provides a view into the life-cycle of any given software development project.</p>
+<p>In what follows, I'll give a non-exhaustive tutorial on some Git commands. Once you've created a repo on Github and navigated into that associated directory, you can update your GitHub repo using the following commands <em>from your computers command line</em>.</p>
+<h5 id="git-init"><code>git init</code></h5>
+<p>The git init command creates a new Git repository. * Can be used to convert an existing, unversioned project to a Git repository or initialize a new empty repository. * As most other Git commands are not available outside of an initialized repository, this will probably be the first coommand you use in a new project.</p>
+<p>All you have to do is cd into your project folder and run git init, and you’ll have a fully functional Git repository.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> project_directory
+<span class="kw">git</span> init</code></pre></div>
+<h5 id="git-clone"><code>git clone</code></h5>
+<ul>
+<li>Copies an existing Git repository; a &quot;working copy&quot; with its own history that manages its own files and is a completely isolated environment from the original repository.</li>
+</ul>
+<p>*Cloning automatically creates a remote connection called origin pointing back to the original repository. This makes it very easy to interact with a central repository.</p>
+<p>*Like <code>git init</code>, you generally only clone a repo once. After cloning, all version control operations and collaborations are managed through their local repository.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone <span class="kw">&lt;</span>repo<span class="kw">&gt;</span> <span class="co"># clones repo to where ever you are</span>
+<span class="kw">git</span> clone <span class="kw">&lt;</span>repo<span class="kw">&gt;</span> <span class="kw">&lt;</span>dir<span class="kw">&gt;</span>  <span class="co">#clones the repo to &lt;dir&gt;</span>
+<span class="co"># cd into repo</span>
+<span class="co"># modify project</span></code></pre></div>
+<h5 id="git-add"><code>git add</code></h5>
+<ul>
+<li>Adds a change in the working directory to the staging area. This is the <em>snapshot</em> Git takes. Signifies to Git that you want to include updates to a particular file in the next commit but doesn't affect the repository until you run <code>git commit</code>.</li>
+</ul>
+<p>Example uses:</p>
+<ul>
+<li><code>git add &lt;file&gt;</code>: stage all changes in <file> for commit</li>
+<li><code>git add &lt;dir&gt;</code>: stage all changes in
+<dir>
+for commit</li>
+<li><code>git add -p</code>: Begin an interactive staging session that lets you choose portions of a file to add to the next commit.</li>
+</ul>
+<h5 id="git-commit"><code>git commit</code></h5>
+<ul>
+<li>Commits the added file to the repository. This records the committed version of a project into the repository's history.</li>
+<li>After running this command, you can then use <code>git push</code> to update whatever repository you're currently working on.</li>
+<li>This command is typically run as <code>git commit m- &quot;&lt;message&gt;&quot;</code>, where <message> is a detailed, user-input message regarding the committed changes.</li>
+</ul>
+<h5 id="git-workflow-overview">Git Workflow overview</h5>
+<p>Developing a project revolves around the basic edit/stage/commit pattern. First, you edit your files in the working directory. Then, when you’re ready to save a copy of the current project state, you stage changes with <code>git add</code>. Afterward, you commit it to the project history with <code>git commit</code>. Finally, when you're ready to update the non-local repository on GitHub, use <code>git push</code>.</p>
+<h5 id="other-useful-git-commands">Other useful Git Commands</h5>
+<ul>
+<li><code>git status</code>: Displays the current files in the directory and whether or not they are staged for committing.</li>
+<li><code>git log</code>: shows information regarding the committed project history. Displays committed snapshots. It lets you list the project history, filter it, and search for specific changes.</li>
+<li><code>git pull</code>: Pulls any changes from the repository you're working on and stores them to your local working directory.</li>
+</ul>
+<h5 id="git-summary">Git Summary</h5>
+<p>The whole idea behind any version control system is to store “safe” copies of a project so that you never have to worry about irreparably breaking your code base. Git allows us to do this in a very effective manner. GitHub allows us to easily collaborate with others and provides a user-friendly interface that also allows us to work on multiple projects in an organized manner.</p>
+<hr />
+<h3 id="makefiles">Makefiles</h3>
+<p>A Makefile is a special type of executable file that organizes code compilation in a simple manner. Makefiles contain shell commands and are always named either &quot;<em>Makefile</em>&quot; or &quot;<em>makefile</em>&quot;, depending on the system. While inside the directory that contains the makefile, typing <code>make</code> into the shell will execute the commands inside the Makefile.</p>
+<h5 id="whats-the-point-of-a-makefile">What's the point of a Makefile?</h5>
+<p>Typically, a Makefile is used to keep files up-to-date. Imagine that you have a very large file with many different files; changing a single file that has many dependencies on other files would require recompiling all of those dependent files. Obviously, this is very time-consuming. By bundling all of the files and their dependencies together, a Makefile allows us to do all of this in one command. What's more, <code>make</code> will keep track of previous updates of files, so running <code>make</code> again will only update files that contain changes. Now that we've learned what a Makefile is, let's see an example of how to construct one.</p>
+<h4 id="makefile-example">Makefile Example</h4>
+<p>The structure of a Makefile is simple. It contains a list of <strong>rules</strong> that tell the system what to execute. These <strong>rules</strong> have the following structure:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">target</span>: dependencies 
+  <span class="kw">commands</span></code></pre></div>
+<p>Note that both dependencies and commands can be of arbitraty length. Dependencies are separated by whitespace, commands by new lines or via <code>;</code> (if multiple commands on a single line).</p>
+<ul>
+<li><code>target</code>: This is the file we'd like to create.</li>
+<li><code>dependencies</code>: These are the dependencies dependent on the associated <code>target</code> file.</li>
+<li><code>commands</code>: These commands determine how you create <code>target</code> from the associated <code>dependencies</code>.</li>
+</ul>
+<p>Below I list an explicit example for clarity. It may seem a bit overwhelming at first, but I'll work through it shortly thereafter.</p>
+<p>Suppose we wanted to create the following file structure:</p>
+<pre><code>our_directory/
+    README.md
+    Makefile
+    paper/
+        sections/
+          report.md</code></pre>
+<p>We could structure a Makefile to create this as follows:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">.PHONY</span>: all clean
+
+<span class="kw">all</span>: paper README.md Makefile paper sections
+
+<span class="kw">paper</span>: 
+    <span class="kw">mkdir</span> paper
+
+<span class="kw">sections</span>: paper   
+    <span class="kw">cd</span> paper<span class="kw">;</span> <span class="kw">mkdir</span> sections
+    <span class="kw">echo</span> init <span class="kw">&gt;</span> paper/sections/report.md 
+
+<span class="kw">README.md</span>:
+  <span class="kw">echo</span> init <span class="kw">&gt;</span> README.md
+  
+<span class="kw">clean</span>:
+    <span class="kw">rm</span> -rf paper README.md</code></pre></div>
+<p>Now let's walk through what we just did.</p>
+<p>The first two targets, <code>.PHONY</code> AND <code>all</code>, are special.Let's get all the special character you see out of the way:</p>
+<ul>
+<li><code>all</code>: Specifies which <em>targets</em> to be executed from <code>make</code> call. If you only want to execute specific targets, you can do <code>make &lt;specific target name&gt;</code>. If you want everything in the Makefile to run, you can just list each <em>target</em>, separated by a space, after <code>all:</code></li>
+<li><code>.PHONY</code>: This is a list of special commands that you used. Use this to account for the possible case where you have filenames in your directory that share special character names (e.g. if we had a file named <code>all</code> in our directory before running <code>make</code>, confusion could arise).</li>
+<li><code>clean</code>: This tells you what bash commands to run if you run <code>make clean</code> in the command line. Conventionally, we use this to remove those elements that we just created, hence the commands <code>rm -rf paper READ.ME</code>, which will remove everything we <em>added</em> to the directory via <code>make</code>.</li>
+</ul>
+<p>Following this, we see the following rule:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">paper</span>: 
+    <span class="kw">mkdir</span> paper</code></pre></div>
+<p>In this rule, our first target is paper, which has no dependencies. We give this target the command <code>mkdir paper</code>, which simply creates a directory called <em>paper</em> in the directory holding our Makefile.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sections</span>: paper   
+    <span class="kw">cd</span> paper<span class="kw">;</span> <span class="kw">mkdir</span> sections
+    <span class="kw">echo</span> init <span class="kw">&gt;</span> paper/sections/report.md </code></pre></div>
+<p>The above portion lists <em>sections</em> as our target. We can see that the dependency is paper. This is listed as a dependency because we will reference this dependency in our commands. The commands are straightforward: change the directory into paper and create a new directory called sections. Then make a new file in that directory called <em>report.md</em>. Note that we had to reference the relative path of report.md <em>from the directory of the makefile</em>. This is because each new command line resets the directory to that which holds the makefile.</p>
+<p>The <code>README.md</code> target case is parallel to the <code>paper</code> case.</p>
+<p>The above example should be enough to get you started with makefiles. If you need any help, resources like Google and stackoverflow are your best friend.</p>
+<hr />
+<h2 id="markdown">Markdown</h2>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/ucb-stat159/stat159-fall-2016/master/projects/proj01/images/markdown-logo.png" />
+
+</div>
+<p>Markdown is a markup language with plain text formatting syntax. It is designed to be both easily read and easily converted to HTML (among other formats). This write-up itself was actually written in Markdown! (Right-click view source code to see what it looks like). Markdown is great because it allows for easy weaving between code, equations, and text, so it is often used in writing reports, blog posts, etc.. It can also be used in conjunction with other tools (one of which, pandoc, we'll discuss next) to produce very elegant outputs.</p>
+<p>Markdown is actually very simple, so we'll learn via some brief examples.</p>
+<p>We'll dicuss the following topics:</p>
+<h4 id="headers">Headers</h4>
+<ul>
+<li>To create a header, preface text with the 1-6 <code>#</code> characters; the smaller the number of <code>#</code> characters, the bigger the header.</li>
+<li>For example, the above <strong>Headers</strong> title was written as <code>#### Headers</code>, while the <strong>Markdown</strong> title was written as <code>##Markdown</code>.</li>
+</ul>
+<h4 id="bold">Bold</h4>
+<ul>
+<li>To make a character or statement bold, simply wrap it around two <code>*</code> or <code>_</code> symbols on each side.</li>
+<li>For example, <code>**this is a bold sentence**</code> will output <strong>this is a bold sentence</strong>. We could have also written it as <code>__this is a bold sentence__</code>.</li>
+</ul>
+<h4 id="italics">Italics</h4>
+<ul>
+<li>To make a character or statement italicied, simply wrap it with a single <code>*</code> or <code>_</code>.</li>
+<li>For example, <code>_Italicied_</code> will output <em>Italicized</em>.</li>
+</ul>
+<h4 id="inline-links">Inline Links</h4>
+<ul>
+<li>To add a link, simple preclude a url inside <code>[](url)</code>. You can also make it reference text like so: <code>[this is text to click on](myurl)</code>.</li>
+<li>For example, this <code>[my github](github.com/jwilber)</code> will output a link to my github like so: <a href="github.com/jwilber">my github</a></li>
+</ul>
+<h4 id="inline-images">Inline Images</h4>
+<ul>
+<li>To add an inline image, follow the following template <code>![alt text](url of image link or relative path to image &quot;Optional Title&quot;)</code></li>
+<li>For example, this linke <code>[llama](http://cdn.quotesgram.com/small/9/68/585998811-aef421082816b8b5fb59218374fe0a05.jpg) &quot;Hipster LLama&quot;)</code> will display the following beautiful llama: <img src="http://cdn.quotesgram.com/small/9/68/585998811-aef421082816b8b5fb59218374fe0a05.jpg" alt="llama" />)</li>
+</ul>
+<p>Although it was brief, I'm sure the above mini-tutorial for Markdown is enough to get you on your way to writing some posts in Markdown. There are many other sources available online to get you started. Learning markdown is very easy and will go lengths in helping you produce beautiful, readable outputs.</p>
+<hr />
+<h2 id="pandoc">Pandoc</h2>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/ucb-stat159/stat159-fall-2016/master/projects/proj01/images/pandoc-logo.png" />
+
+</div>
+<p>Pandoc is a command-line tool that is used to convert markup files to different formats. Pandoc handles conversion to a multitude of documents. Possible input document types include (but are not limited to) markdown, reStructuredText, textile, HTML, DocBook, LaTeX, MediaWiki markup, TWiki markup, OPML, Emacs Org-Mode, Txt2Tags, Microsoft Word docx, LibreOffice ODT, EPUB, and Haddock markup. Possible output document types include (but are not limited to) HTML formats (HTML5, XHTML), Ebooks, XML, docx, OPML, LaTeX, Markdown, DokuWiki markup, DocBook, PDF, and InDesign ICML.</p>
+<p>There isn't much more pertinent informatino to reveal, so I'll display some examples of how to use pandoc via the command-line. Note that, depending on your system, certain dependencies may need to be installed for certain desired output types.</p>
+<p>Let's pretend that <em>report.md</em> is a file currently located in your current working directory. To convert it to an html file named <em>report.html</em> using pandoc is as simple as</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pandoc</span> -s report.md -o report.html</code></pre></div>
+<p>We can also convert it to pdf. *Note that you will need to have LaTeX installed for this to work.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pandoc</span> report.md --latex-engine=xelatex -o report.pdf</code></pre></div>
+<p>In either example, the name of the final output is arbitrary. Just make sure that it has the desired extension type.</p>
+<p>As pandoc is a command-line command, we can also used what we learned previously and create it in a Makefile!</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">report.pdf</span>: report.md
+  <span class="kw">pandoc</span> report.md --latex-engine=xelatex -o report.pdf</code></pre></div>
+<p>Thus, we can see the ubiqutous benefit having Pandoc: It easily converts document type from one format to another which, in the real world, facilitates the translation from markdown files into elegant looking output.</p>
+<hr />
+<h3 id="this-paper">This paper</h3>
+<p>This paper used the above tools in the following ways:</p>
+<ul>
+<li><strong>Git</strong>: Used to keep track and manage changes</li>
+<li><strong>GitHub</strong>: Used to create the project repository as well as manage changes via Git.</li>
+<li><strong>MakeFile</strong>: Used as a structure generator for the template of my GitHub repository.</li>
+<li><strong>Markdown</strong>: Used to write every part of what you're seeing right now.</li>
+<li><strong>Panddoc</strong>: Used to convert this (and the other markdown files) into a pretty html file (stored on GitHub).</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>In conclusion, reproducibility is very important in research and data science because it allows for a concise guarantee of the claims made in a study. That is, a reproducible study will all for verification of results.</p>
+<p>In the above write-up, I introduced you to five very important tools that can aid you in your quest for reproducibility: <strong>Git</strong>, <strong>GitHub</strong>, <strong>Makefiles</strong>, <strong>Markdown</strong>, and <strong>Pandoc</strong>. <strong>Git</strong> is a very popular version control sytem that, when used with <strong>GitHub</strong>, allows for a seamless, smooth version control flow wherein which users can easily keep track of multiple projects and changes therein. <strong>Makefiles</strong> are files that allow for easy update of files and the structure of dependency-dependent files/folders. <strong>Pandoc</strong> allows for easy conversion between file types.</p>
+<p>The above five tools are just a few of many that can be used to achieve more reproducible analyses.</p>
+</body>
+</html>
