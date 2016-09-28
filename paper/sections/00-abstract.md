@@ -5,11 +5,13 @@
 Outline:
   - Abstract
   - Introduction
-  -Discussion
+  
+  - Discussion
     - Git
     - GitHub
     - Makefiles
     - Markdown
     - pandoc
     - How they were used in this analysis
+    
   - Conclusion
